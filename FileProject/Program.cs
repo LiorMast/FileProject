@@ -12,19 +12,37 @@ namespace FileProject
     {
         static void Main(string[] args)
         {
-            StreamReader sr = new StreamReader(@"./input.txt");
-
+            int grade;
+            string name = GetNameAndGradeFromFile(@"./input.txt", out grade);
+            Console.WriteLine($"Name is {name}\nGrade is {grade}");
         }
 
-        public static bool IsNumber(string str)
+        public static bool IsDigit(char str)
         {
             Regex regex = new Regex("^[0-9]+$", RegexOptions.IgnoreCase);
-            return regex.IsMatch(str);
+            return regex.IsMatch(str.ToString());
         }
-        public static bool IsLetter(string str)
+        public static bool IsLetter(char str)
         {
             Regex regex = new Regex("^[a-zA-Z]+$", RegexOptions.IgnoreCase);
-            return regex.IsMatch(str);
+            return regex.IsMatch(str.ToString());
         }
+        public static string GetNameAndGradeFromFile(string fileName, out int grade) 
+        {
+            StreamReader sr = new StreamReader(fileName);
+            string line = sr.ReadToEnd();
+            string name = "";
+            string gradestr = "";
+
+            foreach (char line2 in line.Trim())
+            {
+                if (IsLetter(line2)) name += line2;
+                if (IsDigit(line2)) gradestr += line2;
+            }
+
+            grade = int.Parse(gradestr);
+            return name;
+        }
+
     }
 }
