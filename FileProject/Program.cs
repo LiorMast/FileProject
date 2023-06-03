@@ -14,9 +14,10 @@ namespace FileProject
         {
             int grade;
             string name = GetNameAndGradeFromFile(@"./input.txt", out grade);
+            name = Capitalize(name);
             Console.WriteLine($"Name is {name}\nGrade is {grade}");
         }
-
+        public static string Capitalize(string str) => $"{str[0].ToString().ToUpper()}{str.Substring(1).ToLower()}";
         public static bool IsDigit(char str)
         {
             Regex regex = new Regex("^[0-9]+$", RegexOptions.IgnoreCase);
